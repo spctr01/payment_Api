@@ -21,15 +21,16 @@ def ProcessPayment():
         except:
             sec_code = None
     except:
-        return 'asdada'
+        return flask.Response(status=400)
 
+    #Check if all deatils enterd is True
     check = validator(card_number, exp, amount, sec_code).validate_all()
-    print('check',check)
 
-    if check == True:        #if every detail enterd is correct process it with gateway
+    #if every detail enterd is correct process it with gateway
+    if check == True:        
         payment_status = payment_gateway(amount).process_payment()
-
-        if payment_status == False:     #if there is error on gateway to process payment  internal error
+        #if there is error on gateway to process payment  internal error
+        if payment_status == False:     
             return flask.Response(status=500)
         else:   #if payment is processed sucessfully
             return flask.Response(status=200)

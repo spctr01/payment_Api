@@ -1,12 +1,4 @@
 from datetime import datetime
-###################
-#  Class Validator CONTAINS FOUR FUNCTION TO VALIDATE DIFFERENT THINGS
-#  and 5th function to check every thing
-#  card_validator =  TO VALIDATE CARD NUMBER
-#  exp_date_Validator = TO VALIDATE EXPIRAY DATE (it cannot be in the past)
-#   security_validator = TO VALIDATE SECURITY CODE (must be 3 digits)
-#   amount _validator = TO VALIDATE AMOUNT (decimal, positive amount)
-##################
 
 
 class validator():
@@ -16,6 +8,14 @@ class validator():
         self.date = date
         self.amount = amount
         self.security_code = security_code
+
+        '''
+        card_validator =  TO VALIDATE CARD NUMBER
+        exp_date_Validator = TO VALIDATE EXPIRAY DATE (it cannot be in the past)
+        security_validator = TO VALIDATE SECURITY CODE (must be 3 digits)
+        amount _validator = TO VALIDATE AMOUNT (decimal, positive amount)
+        # All the print statements to only check where it fails or what causes return status like 400 (eg wrong card no / secrity code etc)
+        '''
 
             
     #for the validation of the card no "luhn algorithms is used"
@@ -49,6 +49,7 @@ class validator():
         if total % 10 == 0:
             return True
         else:
+            print('Issue in Card NO')
             return False
 
 
@@ -60,14 +61,15 @@ class validator():
         current_month = date_now.strftime('%m')
         
         exp_date = self.date.split('/')
-        print(exp_date[1],current_year, current_month)
         if exp_date[1] > current_year:
             return True
         elif exp_date[1] == current_year:
             if exp_date[0] < current_month:
                 return True
             else:
+                print('Issue in Expiray Date')
                 return False
+        
 
     #optional parameter to check lenght of security code must be 3
     #if security_code is none means no code is passed as it is optional parameter
@@ -77,13 +79,16 @@ class validator():
         elif len(self.security_code) == 3:
             return True
         else:
+            print('Issue in Security code')
             return False
 
     #checks if amount is posetive and in decimal format
     def amount_validator(self):
         if float(self.amount) > 0:
             return True
-        return False
+        else:
+            print('Issue in Amount')
+            return False
 
     #validate all the things
     def validate_all(self):
